@@ -6,9 +6,7 @@
 
 var CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
-  '/',
-  '/styles/main.css',
-  '/script/main.js'
+  '/service_worker/socket.io.min.js',
 ];
 
 self.addEventListener('install', function(event) {
