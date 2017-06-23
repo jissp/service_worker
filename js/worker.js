@@ -10,12 +10,18 @@ var urlsToCache = [
 ];
 
 self.addEventListener('install', function(event) {
-  // Perform install steps
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(function(cache) {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
-  );
+	// Perform install steps
+	event.waitUntil(
+		caches.open(CACHE_NAME).then(function (cache) {
+			var notification = new Notification('hi', {
+				body: 'body',
+			});
+
+			notification.onclick = function () {
+				notification.close();
+			}
+			console.log('Opened cache');
+			return cache.addAll(urlsToCache);
+		})
+	);
 });
