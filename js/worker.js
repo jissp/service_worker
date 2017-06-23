@@ -5,16 +5,22 @@
  */
 
 self.addEventListener('push', event => {
-	event.waitUntil(
-		self.registration.showNotification(title, {
-			body: 'Are you free tonight?',
-			icon: 'images/joe.png',
+	let promiseChain;
+	if (event.data) {
+		// We have data - lets use it
+		promiseChain = Promise.resolve(event.data.json());
+	} else {
+		promiseChain = fetch('/some/data/endpoint.json')
+				.then(response => response.json());
+	}
+
+	promiseChain = promiseChain.then(data => {
+		return self.registration.showNotification(data.title, {
+			body: data.body,
+			icon: (data.icon ? data.icon : '/images/icon-192x192.png'),
 			vibrate: [200, 100, 200, 100, 200, 100, 400],
-			tag: 'request',
-			actions: [
-				{action: 'yes', title: 'Yes!', icon: 'images/thumb-up.png'},
-				{action: 'no', title: 'No', icon: 'images/thumb-down.png'}
-			]
-		})
-	);
+			tag: data.tag
+		});
+	});
+	event.waitUntil(promiseChain);
 });
