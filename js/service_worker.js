@@ -47,7 +47,6 @@ var serviceWorkerClass = {
 					'BH3058mPbrdNUFKyDt7-TNi0mAgbOx-WapuVQwfrMRO4HgjtBjyA5Ie5DoMCnM9HU0JDbfMgZ3G-CAa7nsujMQI'
 				)
 			};
-
 			return registration.pushManager.subscribe(subscribeOptions);
 		})
 		.then(function (pushSubscription) {
@@ -60,4 +59,5 @@ var serviceWorkerClass = {
 	}
 }
 
-serviceWorkerClass.subscribeUserToPush();
+var res = serviceWorkerClass.subscribeUserToPush();
+console.log(res);
