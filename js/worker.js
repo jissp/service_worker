@@ -4,11 +4,17 @@
  * and open the template in the editor.
  */
 
-var CACHE_NAME = 'my-site-cache-v1';
-var urlsToCache = [
-  '/',
-];
-
-self.addEventListener('install', function(event) {
-	
+self.addEventListener('push', event => {
+	event.waitUntil(
+		self.registration.showNotification(title, {
+			body: 'Are you free tonight?',
+			icon: 'images/joe.png',
+			vibrate: [200, 100, 200, 100, 200, 100, 400],
+			tag: 'request',
+			actions: [
+				{action: 'yes', title: 'Yes!', icon: 'images/thumb-up.png'},
+				{action: 'no', title: 'No', icon: 'images/thumb-down.png'}
+			]
+		})
+	);
 });
