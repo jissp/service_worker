@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+importScripts('/service_worker/js/socket.io.min.js');
 
 var CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
