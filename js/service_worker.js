@@ -12,7 +12,7 @@ var serviceWorkerClass = {
 			navigator.serviceWorker.register('./js/worker.js').then(function(registration) {
 				console.log('ServiceWorker registration successful with scope: ', registration.scope);
 				serviceWorkerClass.registration = registration;
-				serviceWorkerClass.askPermission();
+				serviceWorkerClass.askPermission(); 
 			}).catch(function (err) {
 				console.log('ServiceWorker registration failed: ', err);
 			});
