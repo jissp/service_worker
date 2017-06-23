@@ -31,9 +31,28 @@ var serviceWorkerClass = {
 			}
 		})
 		.then(function (permissionResult) {
-			if (permissionResult !== 'granted') {
+			if (permissionResult === 'granted') {
+				console.log('Granted!');
+			} else {
 				throw new Error('We weren\'t granted permission.');
 			}
+		});
+	},
+	/* Push 사용자 등록 */
+	subscribeUserToPush : function() {
+		return getSWRegistration().then(function (registration) {
+			const subscribeOptions = {
+				userVisibleOnly: true,
+				applicationServerKey: urlBase64ToUint8Array(
+					'BH3058mPbrdNUFKyDt7-TNi0mAgbOx-WapuVQwfrMRO4HgjtBjyA5Ie5DoMCnM9HU0JDbfMgZ3G-CAa7nsujMQI'
+				)
+			};
+
+			return registration.pushManager.subscribe(subscribeOptions);
+		})
+		.then(function (pushSubscription) {
+			console.log('Received PushSubscription: ', JSON.stringify(pushSubscription));
+			return pushSubscription;
 		});
 	},
 	isServiceWorker : function() {
