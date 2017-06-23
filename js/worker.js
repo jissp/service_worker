@@ -13,13 +13,7 @@ self.addEventListener('install', function(event) {
 	// Perform install steps
 	event.waitUntil(
 		caches.open(CACHE_NAME).then(function (cache) {
-			var notification = new Notification('hi', {
-				body: 'body',
-			});
-
-			notification.onclick = function () {
-				notification.close();
-			}
+			self.registration.showNotification('title', {body:'body'});
 			console.log('Opened cache');
 			return cache.addAll(urlsToCache);
 		})
