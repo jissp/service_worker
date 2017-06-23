@@ -4,6 +4,35 @@
  * and open the template in the editor.
  */
 
+self.addEventListener('push', function(event) {
+  const promiseChain = getData(event.data)
+  .then(data => {
+    return self.registration.getNotifications({tag: data.tag})
+    .then(notifications => {
+      var noteOptions = {
+        body: data.body,
+        icon: (data.icon ? data.icon : '/images/ic_flight_takeoff_black_24dp_2x.png'),
+        vibrate: [200, 100, 200, 100, 200, 100, 400],
+        tag: data.tag,
+        data: data
+        };
+
+      if (notifications.length > 0) {
+        data.title = "Flight Updates";
+        noteOptions.body = "There are several updates regarding your flight, 5212 to Kansas City.";
+        noteOptions.renotify = true;
+        noteOptions.actions = [
+          {action: 'view', title: 'View updates'},
+          {action: 'notNow', title: 'Not now'}
+        ];
+      }
+
+      return self.registration.showNotification(data.title, noteOptions);
+    });
+  });
+  event.waitUntil(promiseChain);
+});
+
 self.addEventListener('notificationclick', function(event) {
   event.notification.close();
   if (event.action === 'confirm') {
