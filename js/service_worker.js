@@ -40,7 +40,7 @@ var serviceWorkerClass = {
 	},
 	/* Push 사용자 등록 */
 	subscribeUserToPush : function() {
-		return getSWRegistration().then(function (registration) {
+		return this.init().then(function (registration) {
 			const subscribeOptions = {
 				userVisibleOnly: true,
 				applicationServerKey: urlBase64ToUint8Array(
@@ -60,4 +60,4 @@ var serviceWorkerClass = {
 	}
 }
 
-serviceWorkerClass.init();
+serviceWorkerClass.subscribeUserToPush();
